@@ -14,19 +14,22 @@ public class Main {
         BazaDanych.odczytZPlikuPacjenci("src/testy/test32h/pacjenci.txt");
         BazaDanych.odczytZPlikuWizyt("src/testy/test32h/wizyty.txt");
 
-        System.out.println(lekarzExclusive());
-        System.out.println();
-        System.out.println(lekarzZNajwiekszaIlosciaWizyt());
-        System.out.println();
-        System.out.println(top5NajstarszychLekarzy());
-        System.out.println();
-        System.out.println(specjalizacjaZNajwiekszymPowodzeniem());
-        System.out.println();
-        System.out.println(pacjentZNajwiekszaIlosciaWizyt());
-        System.out.println();
-        System.out.println(najwiecejWizytWRoku());
-        System.out.println();
+        System.out.println("Lekarz z największą ilością wizyt:\n"+ lekarzZNajwiekszaIlosciaWizyt());
+
+        System.out.println("Pacjeny z największą ilością wizyt:\n"+ pacjentZNajwiekszaIlosciaWizyt()+"\n");
+
+        System.out.println("Specjaizacja z największym powodzeniem:\n" + specjalizacjaZNajwiekszymPowodzeniem()+"\n");
+
+        System.out.println("Rok w którym było najwięcej wizyt:\n"+ najwiecejWizytWRoku()+"\n");
+
+        System.out.println("Top 5 najstarszych lekarzy: \n"+ top5NajstarszychLekarzy()+"\n");
+
+        System.out.println("Pacjenci którzy byli u 5 różnych lekarzy:");
         System.out.println(pacjenciU5Lekarzy());
+
+        System.out.println("Lekarze którzy przyjmowali tylko jednego pacjenta:");
+        System.out.println(lekarzeExclusive());
+
 
     }
 
@@ -63,9 +66,9 @@ public class Main {
     }
 
 
-    public static Lekarz lekarzExclusive() {
+    public static List<Lekarz> lekarzeExclusive() {
         List<Lekarz> lekarzList = BazaDanych.lekarzList;
-        Lekarz result = lekarzList.get(0);
+        List<Lekarz> result = new ArrayList<>();
         for (Lekarz lekarz : lekarzList) {
             Map<Pacjent, Integer> pacjenci = new HashMap<>();
             for (Wizyta wizyta : lekarz.getListaWizyt()) {
@@ -82,9 +85,12 @@ public class Main {
                     }
                 }
                 if (max == lekarz.getListaWizyt().size()) {
-                    result = lekarz;
+                    result.add(lekarz);
                 }
             }
+        }
+        if (result.isEmpty()){
+            System.out.println("Nie ma takich lekarzy");
         }
         return result;
     }
@@ -171,6 +177,9 @@ public class Main {
                     }
                 }
             }
+        }
+        if (pacjenci5Lekarzy.isEmpty()) {
+            System.out.println("Nie ma pacjenów którzy byli u 5 lekarzy");
         }
         return pacjenci5Lekarzy;
     }

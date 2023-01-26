@@ -2,7 +2,6 @@ package testy.test32h;
 
 import java.time.LocalDate;
 
-
 public abstract class Osoba {
     private String nazwisko, imie, pesel;
     private LocalDate dataUrodzenia;
