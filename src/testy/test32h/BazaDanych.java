@@ -15,7 +15,7 @@ public class BazaDanych {
     public static List<Wizyta> wizytaList = new ArrayList<>();
 
     public static void odczytZPlikuWizyt(String plik) {
-        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))) {
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -34,7 +34,7 @@ public class BazaDanych {
     }
 
     public static void odczytZPlikuPacjenci(String plik) {
-        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))) {
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -55,7 +55,7 @@ public class BazaDanych {
     }
 
     public static void odczytZPlikuLekarze(String plik) {
-        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))) {
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -96,5 +96,4 @@ public class BazaDanych {
         }
         return pacjent;
     }
-
 }

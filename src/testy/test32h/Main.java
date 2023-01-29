@@ -131,8 +131,6 @@ public class Main {
     }
 
 
-
-
     public static int najwiecejWizytWRoku() {
         List<Wizyta> list = BazaDanych.wizytaList;
         Map<Integer, Integer> liczbaWizytWRoku = new HashMap<>();

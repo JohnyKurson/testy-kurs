@@ -24,7 +24,6 @@ public class Pacjent extends Osoba {
         return lekarze.size();
     }
 
-
     public List<Wizyta> getListaWizyt() {
         return listaWizyt;
     }
