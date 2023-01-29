@@ -2,10 +2,7 @@ package testy.test32h;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,18 +16,18 @@ public class Main {
         System.out.println("Pacjent z największą ilością wizyt:\n" + pacjentZNajwiekszaIlosciaWizyt() + "\n");
 
         System.out.println("Specjaizacja z największym powodzeniem:\n" + specjalizacjaZNajwiekszymPowodzeniem() + "\n");
-        System.out.println("test" + specjalizacjaZNajwiekszymPowodzeniem());
 
         System.out.println("Rok w którym było najwięcej wizyt:\n" + najwiecejWizytWRoku() + "\n");
 
         System.out.println("Top 5 najstarszych lekarzy: \n" + top5NajstarszychLekarzy() + "\n");
+
+        System.out.println("Test top 5 : " + top5NajstarszychLekarzy2());
 
         System.out.println("Pacjenci którzy byli u 5 różnych lekarzy:");
         System.out.println(pacjenciU5Lekarzy());
 
         System.out.println("Lekarze którzy przyjmowali tylko jednego pacjenta:");
         System.out.println(lekarzeExclusive());
-
 
     }
 
@@ -80,6 +77,16 @@ public class Main {
             }
         }
         return result;
+    }
+
+    public static List<Lekarz> top5NajstarszychLekarzy2() {
+        List<Lekarz> lekarze = BazaDanych.lekarzList;
+        lekarze.sort(Comparator.comparing(Lekarz::getDataUrodzenia));
+        if (lekarze.size() <= 5) {
+            return lekarze;
+        } else {
+            return lekarze.subList(0, 5);
+        }
     }
 
     public static List<Lekarz> lekarzeExclusive() {
