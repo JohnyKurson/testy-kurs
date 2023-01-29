@@ -14,15 +14,16 @@ public class Main {
         BazaDanych.odczytZPlikuPacjenci("src/testy/test32h/pacjenci.txt");
         BazaDanych.odczytZPlikuWizyt("src/testy/test32h/wizyty.txt");
 
-        System.out.println("Lekarz z największą ilością wizyt:\n"+ lekarzZNajwiekszaIlosciaWizyt());
+        System.out.println("Lekarz z największą ilością wizyt:\n" + lekarzZNajwiekszaIlosciaWizyt());
 
-        System.out.println("Pacjeny z największą ilością wizyt:\n"+ pacjentZNajwiekszaIlosciaWizyt()+"\n");
+        System.out.println("Pacjent z największą ilością wizyt:\n" + pacjentZNajwiekszaIlosciaWizyt() + "\n");
 
-        System.out.println("Specjaizacja z największym powodzeniem:\n" + specjalizacjaZNajwiekszymPowodzeniem()+"\n");
+        System.out.println("Specjaizacja z największym powodzeniem:\n" + specjalizacjaZNajwiekszymPowodzeniem() + "\n");
+        System.out.println("test" + specjalizacjaZNajwiekszymPowodzeniem());
 
-        System.out.println("Rok w którym było najwięcej wizyt:\n"+ najwiecejWizytWRoku()+"\n");
+        System.out.println("Rok w którym było najwięcej wizyt:\n" + najwiecejWizytWRoku() + "\n");
 
-        System.out.println("Top 5 najstarszych lekarzy: \n"+ top5NajstarszychLekarzy()+"\n");
+        System.out.println("Top 5 najstarszych lekarzy: \n" + top5NajstarszychLekarzy() + "\n");
 
         System.out.println("Pacjenci którzy byli u 5 różnych lekarzy:");
         System.out.println(pacjenciU5Lekarzy());
@@ -42,6 +43,22 @@ public class Main {
             }
         }
         return lekarz;
+    }
+
+    public static List<Pacjent> pacjentZNajwiekszaIlosciaWizyt() {
+        List<Pacjent> listaPacjentow = BazaDanych.pacjentList;
+        List<Pacjent> result = new ArrayList<>();
+        Pacjent pacjent = listaPacjentow.get(0);
+        for (Pacjent p : listaPacjentow) {
+            if (p.getListaWizyt().size() > pacjent.getListaWizyt().size()) {
+                pacjent = p;
+                result.clear();
+                result.add(pacjent);
+            } else if (p.getListaWizyt().size() == pacjent.getListaWizyt().size()) {
+                result.add(p);
+            }
+        }
+        return result;
     }
 
     public static List<Lekarz> top5NajstarszychLekarzy() {
@@ -65,32 +82,20 @@ public class Main {
         return result;
     }
 
-
     public static List<Lekarz> lekarzeExclusive() {
-        List<Lekarz> lekarzList = BazaDanych.lekarzList;
+        List<Lekarz> lekarze = BazaDanych.lekarzList;
         List<Lekarz> result = new ArrayList<>();
-        for (Lekarz lekarz : lekarzList) {
-            Map<Pacjent, Integer> pacjenci = new HashMap<>();
+        for (Lekarz lekarz : lekarze) {
+            int iloscLekarzyNaPacjenta = 0;
             for (Wizyta wizyta : lekarz.getListaWizyt()) {
-                Pacjent pacjent = wizyta.getPacjent();
-                if (pacjenci.containsKey(pacjent)) {
-                    pacjenci.put(pacjent, pacjenci.get(pacjent) + 1);
-                } else {
-                    pacjenci.put(pacjent, 1);
-                }
-                int max = 0;
-                for (Map.Entry<Pacjent, Integer> entry : pacjenci.entrySet()) {
-                    if (entry.getValue() > max) {
-                        max = entry.getValue();
-                    }
-                }
-                if (max == lekarz.getListaWizyt().size()) {
-                    result.add(lekarz);
-                }
+                iloscLekarzyNaPacjenta += wizyta.getPacjent().getIloscLekarzy();
+            }
+            if (iloscLekarzyNaPacjenta == 1) {
+                result.add(lekarz);
             }
         }
-        if (result.isEmpty()){
-            System.out.println("Nie ma takich lekarzy");
+        if (result.isEmpty()) {
+            System.out.println("Nie ma takiego lekarza");
         }
         return result;
     }
@@ -118,21 +123,8 @@ public class Main {
         return specjalizacjaZNajwiekszymPowodzeniem;
     }
 
-    public static List<Pacjent> pacjentZNajwiekszaIlosciaWizyt() {
-        List<Pacjent> listaPacjentow = BazaDanych.pacjentList;
-        List<Pacjent> result = new ArrayList<>();
-        Pacjent pacjent = listaPacjentow.get(0);
-        for (Pacjent p : listaPacjentow) {
-            if (p.getListaWizyt().size() > pacjent.getListaWizyt().size()) {
-                pacjent = p;
-                result.clear();
-                result.add(pacjent);
-            } else if (p.getListaWizyt().size() == pacjent.getListaWizyt().size()) {
-                result.add(p);
-            }
-        }
-        return result;
-    }
+
+
 
     public static int najwiecejWizytWRoku() {
         List<Wizyta> list = BazaDanych.wizytaList;
@@ -163,18 +155,8 @@ public class Main {
         for (Lekarz lekarz : lekarze) {
             for (Wizyta wizyta : lekarz.getListaWizyt()) {
                 Pacjent pacjent = wizyta.getPacjent();
-                if (!pacjenci5Lekarzy.contains(pacjent)) {
-                    int liczbaWizyt = 0;
-                    for (Lekarz lekarz2 : lekarze) {
-                        for (Wizyta wizyta2 : lekarz2.getListaWizyt()) {
-                            if (wizyta2.getPacjent().equals(pacjent)) {
-                                liczbaWizyt++;
-                            }
-                        }
-                    }
-                    if (liczbaWizyt >= 5) {
-                        pacjenci5Lekarzy.add(pacjent);
-                    }
+                if (!pacjenci5Lekarzy.contains(pacjent) && pacjent.liczbaWizytULekarza() >= 5) {
+                    pacjenci5Lekarzy.add(pacjent);
                 }
             }
         }

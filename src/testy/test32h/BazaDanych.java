@@ -15,8 +15,7 @@ public class BazaDanych {
     public static List<Wizyta> wizytaList = new ArrayList<>();
 
     public static void odczytZPlikuWizyt(String plik) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(plik));
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -27,7 +26,6 @@ public class BazaDanych {
                 LocalDate dataWizyty = LocalDate.parse(data[2], dtf);
                 wizytaList.add(new Wizyta(lekarz, pacjent, dataWizyty));
             }
-            br.close();
         } catch (FileNotFoundException e) {
             System.out.println("Dany plik nie istnieje");
         } catch (IOException e) {
@@ -36,8 +34,7 @@ public class BazaDanych {
     }
 
     public static void odczytZPlikuPacjenci(String plik) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(plik));
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -50,7 +47,6 @@ public class BazaDanych {
                 LocalDate dataUrodzenia = LocalDate.parse(dane[4], dtf);
                 pacjentList.add(new Pacjent(idPacjenta, nazwisko, imie, pesel, dataUrodzenia));
             }
-            br.close();
         } catch (FileNotFoundException e) {
             System.out.println("Dany plik nie istnieje");
         } catch (IOException e) {
@@ -59,8 +55,7 @@ public class BazaDanych {
     }
 
     public static void odczytZPlikuLekarze(String plik) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(plik));
+        try (BufferedReader br = new BufferedReader(new FileReader(plik))){
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
@@ -75,8 +70,6 @@ public class BazaDanych {
                 Lekarz lekarz = new Lekarz(idLekarza, nazwisko, imie, specjalizacja, dataUrodzenia, NIP, PESEL);
                 lekarzList.add(lekarz);
             }
-            br.close();
-
         } catch (FileNotFoundException e) {
             System.out.println("Dany plik nie istnieje");
         } catch (IOException e) {

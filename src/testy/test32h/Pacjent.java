@@ -13,6 +13,31 @@ public class Pacjent extends Osoba {
         this.idPacjenta = idPacjenta;
     }
 
+    public int getIloscLekarzy() {
+        List<Lekarz> lekarze = new ArrayList<>();
+        for (Wizyta wizyta : getListaWizyt()) {
+            Lekarz lekarz = wizyta.getLekarz();
+            if (!lekarze.contains(lekarz)) {
+                lekarze.add(lekarz);
+            }
+        }
+        return lekarze.size();
+    }
+
+    public int liczbaWizytULekarza() {
+        int liczbaWizyt = 0;
+        for (Lekarz lekarz : BazaDanych.lekarzList) {
+            for (Wizyta wizyta : lekarz.getListaWizyt()) {
+                if (wizyta.getPacjent().equals(this)) {
+                    liczbaWizyt++;
+                }
+            }
+        }
+        return liczbaWizyt;
+    }
+
+
+
     public List<Wizyta> getListaWizyt() {
         return listaWizyt;
     }
@@ -20,7 +45,6 @@ public class Pacjent extends Osoba {
     public void setListaWizyt(List<Wizyta> listaWizyt) {
         this.listaWizyt = listaWizyt;
     }
-
 
     public int getIdPacjenta() {
         return idPacjenta;
