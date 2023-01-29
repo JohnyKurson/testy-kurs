@@ -162,7 +162,7 @@ public class Main {
         for (Lekarz lekarz : lekarze) {
             for (Wizyta wizyta : lekarz.getListaWizyt()) {
                 Pacjent pacjent = wizyta.getPacjent();
-                if (!pacjenci5Lekarzy.contains(pacjent) && pacjent.liczbaWizytULekarza() >= 5) {
+                if (!pacjenci5Lekarzy.contains(pacjent) && pacjent.getIloscLekarzy() >= 5) {
                     pacjenci5Lekarzy.add(pacjent);
                 }
             }

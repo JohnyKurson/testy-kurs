@@ -24,19 +24,6 @@ public class Pacjent extends Osoba {
         return lekarze.size();
     }
 
-    public int liczbaWizytULekarza() {
-        int liczbaWizyt = 0;
-        for (Lekarz lekarz : BazaDanych.lekarzList) {
-            for (Wizyta wizyta : lekarz.getListaWizyt()) {
-                if (wizyta.getPacjent().equals(this)) {
-                    liczbaWizyt++;
-                }
-            }
-        }
-        return liczbaWizyt;
-    }
-
-
 
     public List<Wizyta> getListaWizyt() {
         return listaWizyt;
